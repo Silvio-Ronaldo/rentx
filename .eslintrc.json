@@ -33,6 +33,9 @@
       "import/prefer-default-export": "off",
       "no-unused-expressions": "off",
       "no-use-before-define": "off",
+      "react/style-prop-object": "off",
+      "camelcase": "off",
+      "@typescript-eslint/no-empty-interface": "off",
       "prettier/prettier": "error",
       "import/extensions": [
         "error",
