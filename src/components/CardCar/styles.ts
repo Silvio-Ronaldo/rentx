@@ -56,6 +56,6 @@ export const Price = styled.Text`
 `;
 
 export const CarImage = styled.Image`
-  width: 187px;
+  width: 130px;
   height: 110px;
 `;

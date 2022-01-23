@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import {
   useFonts,
@@ -15,6 +16,7 @@ import {
 import theme from './src/styles/theme';
 
 import { Home } from './src/screens/Home';
+import { CarDetails } from './src/screens/CarDetails';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +33,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Home />
+      <GestureHandlerRootView>
+        <CarDetails />
+      </GestureHandlerRootView>
     </ThemeProvider>
   );
 }

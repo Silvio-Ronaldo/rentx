@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-import { Container, Header, TotalCars } from './styles';
+import { Container, Header, TotalCars, CarList } from './styles';
 
 import Logo from '../../assets/logo.svg';
 
@@ -15,17 +15,6 @@ export function Home() {
     rent: {
       period: 'Ao dia',
       price: 170,
-    },
-    thumbnail:
-      'https://production.autoforce.com/uploads/version/profile_image/3188/comprar-tiptronic_87272c1ff1.png',
-  };
-
-  const carTwo = {
-    brand: 'Porsche',
-    name: 'Panamera',
-    rent: {
-      period: 'Ao dia',
-      price: 350,
     },
     thumbnail:
       'https://production.autoforce.com/uploads/version/profile_image/3188/comprar-tiptronic_87272c1ff1.png',
@@ -45,8 +34,11 @@ export function Home() {
         <TotalCars>Total de 14 carros</TotalCars>
       </Header>
 
-      <CardCar data={carOne} />
-      <CardCar data={carTwo} />
+      <CarList
+        data={[1, 2, 3, 4, 5, 6, 7]}
+        keyExtractor={item => String(item)}
+        renderItem={({ item }) => <CardCar data={carOne} />}
+      />
     </Container>
   );
 }
