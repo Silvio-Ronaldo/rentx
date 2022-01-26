@@ -7,17 +7,16 @@ interface DateValueProps {
 }
 
 export const Container = styled.View`
-  flex: 1;
   background-color: ${({ theme }) => theme.colors.background_secondary};
 `;
 
 export const Header = styled.View`
   width: 100%;
-  height: ${getStatusBarHeight() + 325}px;
+  height: 325px;
 
   background-color: ${({ theme }) => theme.colors.header};
 
-  justify-content: space-between;
+  justify-content: center;
   padding: ${getStatusBarHeight() + 25}px 25px 25px;
 `;
 
@@ -35,6 +34,8 @@ export const RentalPeriod = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  margin-top: 24px;
 `;
 
 export const DateInfo = styled.View`
@@ -70,7 +71,9 @@ export const Content = styled.ScrollView.attrs({
     paddingBottom: 24,
   },
   showsVerticalScrollIndicator: false,
-})``;
+})`
+  height: ${RFPercentage(45)}px;
+`;
 
 export const Footer = styled.View`
   padding: 24px;
