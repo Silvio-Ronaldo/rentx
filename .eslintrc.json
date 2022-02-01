@@ -39,6 +39,7 @@
       "import/no-extraneous-dependencies": "off",
       "react/require-default-props": "off",
       "react/jsx-props-no-spreading": "off",
+      "react/jsx-no-bind": "off",
       "prettier/prettier": "error",
       "import/extensions": [
         "error",

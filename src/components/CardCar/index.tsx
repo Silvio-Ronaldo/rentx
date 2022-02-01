@@ -1,4 +1,5 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import {
   Container,
@@ -24,13 +25,13 @@ type CardCarData = {
   thumbnail: string;
 };
 
-interface CardCarProps {
+interface CardCarProps extends RectButtonProps {
   data: CardCarData;
 }
 
-export function CardCar({ data }: CardCarProps) {
+export function CardCar({ data, ...rest }: CardCarProps) {
   return (
-    <Container>
+    <Container {...rest}>
       <Details>
         <Brand>{data.brand}</Brand>
         <Name>{data.name}</Name>

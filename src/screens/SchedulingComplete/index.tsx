@@ -2,6 +2,7 @@ import React from 'react';
 import { useWindowDimensions, StatusBar } from 'react-native';
 import { useTheme } from 'styled-components';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { useNavigation } from '@react-navigation/native';
 
 import { Button } from '../../components/Button';
 
@@ -13,6 +14,11 @@ import DoneSvg from '../../assets/done.svg';
 export function SchedulingComplete() {
   const { width } = useWindowDimensions();
   const theme = useTheme();
+  const { navigate } = useNavigation();
+
+  function handleConfirmedRentalCar() {
+    navigate('Home');
+  }
 
   return (
     <Container>
@@ -37,7 +43,11 @@ export function SchedulingComplete() {
       </Content>
 
       <Footer>
-        <Button title="OK" color={theme.colors.shape_dark} />
+        <Button
+          title="OK"
+          color={theme.colors.shape_dark}
+          onPress={handleConfirmedRentalCar}
+        />
       </Footer>
     </Container>
   );

@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -44,6 +45,11 @@ import peopleSvg from '../../assets/people.svg';
 
 export function SchedulingDetails() {
   const theme = useTheme();
+  const { navigate } = useNavigation();
+
+  function handleConfirmRentalCar() {
+    navigate('SchedulingComplete');
+  }
 
   return (
     <Container>
@@ -123,7 +129,11 @@ export function SchedulingDetails() {
       </Content>
 
       <Footer>
-        <Button title="Alugar agora" color={theme.colors.success} />
+        <Button
+          title="Alugar agora"
+          color={theme.colors.success}
+          onPress={handleConfirmRentalCar}
+        />
       </Footer>
     </Container>
   );

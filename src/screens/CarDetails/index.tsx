@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -30,6 +31,12 @@ import exchangeSvg from '../../assets/exchange.svg';
 import peopleSvg from '../../assets/people.svg';
 
 export function CarDetails() {
+  const { navigate } = useNavigation();
+
+  function handleConfirmRentalCar() {
+    navigate('Scheduling');
+  }
+
   return (
     <Container>
       <Header>
@@ -80,7 +87,7 @@ export function CarDetails() {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" />
+        <Button title="Confirmar" onPress={handleConfirmRentalCar} />
       </Footer>
     </Container>
   );

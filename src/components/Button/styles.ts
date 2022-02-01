@@ -3,7 +3,7 @@ import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ContainerProps extends RectButtonProps {
-  color: string;
+  color?: string;
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
