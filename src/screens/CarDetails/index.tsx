@@ -1,10 +1,15 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Accessory } from '../../components/Accessory';
 import { Button } from '../../components/Button';
+
+import { CarDTO } from '../../dtos/CarDTO';
+
+import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 
 import {
   Container,
@@ -23,15 +28,18 @@ import {
   Footer,
 } from './styles';
 
-import speedSvg from '../../assets/speed.svg';
-import accelerationSvg from '../../assets/acceleration.svg';
-import forceSvg from '../../assets/force.svg';
-import gasolineSvg from '../../assets/gasoline.svg';
-import exchangeSvg from '../../assets/exchange.svg';
-import peopleSvg from '../../assets/people.svg';
+interface Params {
+  car: CarDTO;
+}
 
 export function CarDetails() {
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
+  const route = useRoute();
+  const { car } = route.params as Params;
+
+  function handleBack() {
+    goBack();
+  }
 
   function handleConfirmRentalCar() {
     navigate('Scheduling');
@@ -39,51 +47,44 @@ export function CarDetails() {
 
   return (
     <Container>
+      <StatusBar
+        translucent
+        barStyle="dark-content"
+        backgroundColor="transparent"
+      />
+
       <Header>
-        <BackButton />
+        <BackButton onPress={handleBack} />
       </Header>
 
       <CarImage>
-        <ImageSlider
-          imageUrls={[
-            'https://production.autoforce.com/uploads/version/profile_image/3188/comprar-tiptronic_87272c1ff1.png',
-          ]}
-        />
+        <ImageSlider imageUrls={car.photos} />
       </CarImage>
 
       <Content>
         <Details>
           <Description>
-            <Brand>Lamborghini</Brand>
-            <Name>Huracán</Name>
+            <Brand>{car.brand}</Brand>
+            <Name>{car.name}</Name>
           </Description>
 
           <Rent>
-            <Period>Ao dia</Period>
-            <Price>R$ 780</Price>
+            <Period>{car.rent.period}</Period>
+            <Price>R$ {car.rent.price}</Price>
           </Rent>
         </Details>
 
         <Accessories>
-          <Accessory info="380 Km/h" icon={speedSvg} />
-          <Accessory info="3.2 s" icon={accelerationSvg} />
-          <Accessory info="800 HP" icon={forceSvg} />
-          <Accessory info="Gasolina" icon={gasolineSvg} />
-          <Accessory info="Auto" icon={exchangeSvg} />
-          <Accessory info="2 pessoas" icon={peopleSvg} />
+          {car.accessories.map(accessory => (
+            <Accessory
+              key={accessory.type}
+              info={accessory.name}
+              icon={getAccessoryIcon(accessory.type)}
+            />
+          ))}
         </Accessories>
 
-        <About>
-          Este é um automóvel desportivo. Surgiu do lendário touro de lide
-          indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
-          para quem gosta de acelerar.
-        </About>
-
-        <About>
-          Este é um automóvel desportivo. Surgiu do lendário touro de lide
-          indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
-          para quem gosta de acelerar.
-        </About>
+        <About>{car.about}</About>
       </Content>
 
       <Footer>
