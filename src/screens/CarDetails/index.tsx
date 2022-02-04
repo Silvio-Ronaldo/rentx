@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -10,6 +11,8 @@ import { Button } from '../../components/Button';
 import { CarDTO } from '../../dtos/CarDTO';
 
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
+
+import { RootNativeParamList } from '../../@types/@react-navigation';
 
 import {
   Container,
@@ -28,21 +31,25 @@ import {
   Footer,
 } from './styles';
 
-interface Params {
-  car: CarDTO;
-}
+type CarDetailsScreenNavigationProp = NativeStackNavigationProp<
+  RootNativeParamList,
+  'CarDetails'
+>;
+
+type CarDetailsRouteProp = RouteProp<RootNativeParamList, 'CarDetails'>;
 
 export function CarDetails() {
-  const { navigate, goBack } = useNavigation();
-  const route = useRoute();
-  const { car } = route.params as Params;
+  const { navigate, goBack } = useNavigation<CarDetailsScreenNavigationProp>();
+  const {
+    params: { car },
+  } = useRoute<CarDetailsRouteProp>();
 
   function handleBack() {
     goBack();
   }
 
   function handleConfirmRentalCar() {
-    navigate('Scheduling');
+    navigate('Scheduling', { car });
   }
 
   return (

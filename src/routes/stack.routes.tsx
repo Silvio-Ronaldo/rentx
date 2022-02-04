@@ -7,9 +7,12 @@ import { Scheduling } from '../screens/Scheduling';
 import { SchedulingDetails } from '../screens/SchedulingDetails';
 import { SchedulingComplete } from '../screens/SchedulingComplete';
 
-const { Navigator, Screen } = createNativeStackNavigator();
+import { RootNativeParamList } from '../@types/@react-navigation';
 
 export function StackRoutes() {
+  const { Navigator, Screen } =
+    createNativeStackNavigator<RootNativeParamList>();
+
   return (
     <Navigator
       screenOptions={{

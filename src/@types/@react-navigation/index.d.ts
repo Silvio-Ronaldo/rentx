@@ -1,9 +1,9 @@
-declare namespace ReactNavigation {
-  export interface RootParamList {
-    Home: undefined;
-    CarDetails: undefined;
-    Scheduling: undefined;
-    SchedulingDetails: undefined;
-    SchedulingComplete: undefined;
-  }
-}
+import { CarDTO } from '../../dtos/CarDTO';
+
+export type RootNativeParamList = {
+  Home: undefined;
+  CarDetails: { car: CarDTO };
+  Scheduling: { car: CarDTO };
+  SchedulingDetails: { car: CarDTO; dates: string[] };
+  SchedulingComplete: undefined;
+};

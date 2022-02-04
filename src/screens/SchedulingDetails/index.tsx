@@ -45,7 +45,11 @@ import peopleSvg from '../../assets/people.svg';
 
 export function SchedulingDetails() {
   const theme = useTheme();
-  const { navigate } = useNavigation();
+  const { navigate, goBack } = useNavigation();
+
+  function handleBack() {
+    goBack();
+  }
 
   function handleConfirmRentalCar() {
     navigate('SchedulingComplete');
@@ -60,7 +64,7 @@ export function SchedulingDetails() {
       />
 
       <Header>
-        <BackButton />
+        <BackButton onPress={handleBack} />
       </Header>
 
       <CarImage>
