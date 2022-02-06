@@ -8,8 +8,6 @@ import { ImageSlider } from '../../components/ImageSlider';
 import { Accessory } from '../../components/Accessory';
 import { Button } from '../../components/Button';
 
-import { CarDTO } from '../../dtos/CarDTO';
-
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 
 import { RootNativeParamList } from '../../@types/@react-navigation';
