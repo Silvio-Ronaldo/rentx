@@ -133,7 +133,11 @@ export function Scheduling({ navigation, route }: SchedulingProps) {
       </Content>
 
       <Footer>
-        <Button title="Confirmar" onPress={handleConfirmScheduling} />
+        <Button
+          title="Confirmar"
+          onPress={handleConfirmScheduling}
+          enabled={!!rentalPeriod.startFormatted}
+        />
       </Footer>
     </Container>
   );

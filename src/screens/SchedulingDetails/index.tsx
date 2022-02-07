@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -52,6 +52,8 @@ export function SchedulingDetails({
   navigation,
   route,
 }: SchedulingDetailsProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const theme = useTheme();
   const { car, dates } = route.params;
 
@@ -67,6 +69,7 @@ export function SchedulingDetails({
   }
 
   async function handleConfirmRentalCar() {
+    setIsLoading(true);
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
 
     try {
@@ -103,6 +106,7 @@ export function SchedulingDetails({
           ),
         );
     } catch (error) {
+      setIsLoading(false);
       Alert.alert(
         'Intervalo de datas indisponível',
         'Por favor, selecione outras datas',
@@ -191,6 +195,8 @@ export function SchedulingDetails({
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handleConfirmRentalCar}
+          enabled={!isLoading}
+          loading={isLoading}
         />
       </Footer>
     </Container>

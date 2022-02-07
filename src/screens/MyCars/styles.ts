@@ -71,6 +71,7 @@ export const CardCarWrapper = styled.View`
 export const CardFooter = styled.View`
   width: 100%;
   padding: 12px;
+  margin-top: -10px;
 
   flex-direction: row;
   justify-content: space-between;

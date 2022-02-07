@@ -76,9 +76,9 @@ export function MyCars({ navigation }: MyCarsProps) {
         <BackButton color={theme.colors.shape} onPress={handleBack} />
 
         <Title>
-          Escolha uma {'\n'}
-          data de início e {'\n'}
-          fim do aluguel
+          Aqui estão {'\n'}
+          todos os seus {'\n'}
+          carros alugados
         </Title>
 
         <Subtitle>
@@ -112,6 +112,7 @@ export function MyCars({ navigation }: MyCarsProps) {
                       name="arrowright"
                       size={20}
                       color={theme.colors.title}
+                      style={{ marginHorizontal: 10 }}
                     />
                     <CardFooterDate>{item.endDate}</CardFooterDate>
                   </CardFooterPeriod>
