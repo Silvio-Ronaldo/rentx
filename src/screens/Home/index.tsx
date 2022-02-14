@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 
@@ -18,24 +17,20 @@ import Logo from '../../assets/logo.svg';
 
 import { Container, Header, TotalCars, CarList, MyCarsButton } from './styles';
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
-  RootNativeParamList,
-  'Home'
->;
+type HomeScreenProps = NativeStackScreenProps<RootNativeParamList, 'Home'>;
 
-export function Home() {
+export function Home({ navigation }: HomeScreenProps) {
   const [cars, setCars] = useState<CarDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { navigate } = useNavigation<HomeScreenNavigationProp>();
   const theme = useTheme();
 
   function handleCarDetails(car: CarDTO) {
-    navigate('CarDetails', { car });
+    navigation.navigate('CarDetails', { car });
   }
 
   function handleOpenMyCars() {
-    navigate('MyCars');
+    navigation.navigate('MyCars');
   }
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
@@ -29,25 +28,20 @@ import {
   Footer,
 } from './styles';
 
-type CarDetailsScreenNavigationProp = NativeStackNavigationProp<
+type CarDetailsScreenProps = NativeStackScreenProps<
   RootNativeParamList,
   'CarDetails'
 >;
 
-type CarDetailsRouteProp = RouteProp<RootNativeParamList, 'CarDetails'>;
-
-export function CarDetails() {
-  const { navigate, goBack } = useNavigation<CarDetailsScreenNavigationProp>();
-  const {
-    params: { car },
-  } = useRoute<CarDetailsRouteProp>();
+export function CarDetails({ navigation, route }: CarDetailsScreenProps) {
+  const { car } = route.params;
 
   function handleBack() {
-    goBack();
+    navigation.goBack();
   }
 
   function handleConfirmRentalCar() {
-    navigate('Scheduling', { car });
+    navigation.navigate('Scheduling', { car });
   }
 
   return (
