@@ -49,7 +49,11 @@ export function CarDetails({ navigation, route }: CarDetailsScreenProps) {
   });
 
   const headerAnimationStyle = useAnimatedStyle(() => ({
-    height: interpolate(scroll.value, [0, 200], [200, 90], Extrapolate.CLAMP),
+    height: interpolate(scroll.value, [0, 200], [210, 90], Extrapolate.CLAMP),
+  }));
+
+  const sliderAnimationStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(scroll.value, [0, 150], [1, 0]),
   }));
 
   function handleBack() {
@@ -74,7 +78,9 @@ export function CarDetails({ navigation, route }: CarDetailsScreenProps) {
         </Header>
 
         <CarImage>
-          <ImageSlider imageUrls={car.photos} />
+          <Animated.View style={sliderAnimationStyle}>
+            <ImageSlider imageUrls={car.photos} />
+          </Animated.View>
         </CarImage>
       </Animated.View>
 
@@ -87,6 +93,7 @@ export function CarDetails({ navigation, route }: CarDetailsScreenProps) {
         }}
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
+        scrollEventThrottle={16}
       >
         <Details>
           <Description>
