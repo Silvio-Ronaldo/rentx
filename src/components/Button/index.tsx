@@ -8,7 +8,6 @@ import theme from '../../styles/theme';
 interface ButtonProps extends RectButtonProps {
   title: string;
   color?: string;
-  enabled?: boolean;
   loading?: boolean;
   light?: boolean;
 }

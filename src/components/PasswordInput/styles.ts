@@ -3,12 +3,23 @@ import { TextInput } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
-interface ContainerProps {
+interface Props {
   isFocused: boolean;
 }
 
-export const Container = styled.View<ContainerProps>`
+export const Container = styled.View`
   flex-direction: row;
+`;
+
+export const IconContainer = styled.View<Props>`
+  height: 56px;
+  width: 55px;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 2px;
+
+  background-color: ${({ theme }) => theme.colors.background_secondary};
 
   ${({ isFocused, theme }) =>
     isFocused &&
@@ -18,18 +29,7 @@ export const Container = styled.View<ContainerProps>`
     `}
 `;
 
-export const IconContainer = styled.View`
-  height: 56px;
-  width: 55px;
-  justify-content: center;
-  align-items: center;
-
-  margin-right: 2px;
-
-  background-color: ${({ theme }) => theme.colors.background_secondary};
-`;
-
-export const InputText = styled(TextInput)`
+export const InputText = styled(TextInput)<Props>`
   flex: 1;
 
   background-color: ${({ theme }) => theme.colors.background_secondary};
@@ -38,9 +38,16 @@ export const InputText = styled(TextInput)`
   color: ${({ theme }) => theme.colors.text};
 
   padding: 0 23px;
+
+  ${({ isFocused, theme }) =>
+    isFocused &&
+    css`
+      border-bottom-width: 2px;
+      border-bottom-color: ${theme.colors.main};
+    `}
 `;
 
-export const EyeContainer = styled(IconContainer)`
+export const EyeContainer = styled(IconContainer)<Props>`
   margin-right: 0;
 `;
 
