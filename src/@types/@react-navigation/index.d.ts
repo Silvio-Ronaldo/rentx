@@ -7,6 +7,7 @@ export type RootNativeParamList = {
   SignUpFirstStep: undefined;
   SignUpSecondStep: { user: UserDTO };
   Home: undefined;
+  Profile: undefined;
   CarDetails: { car: CarDTO };
   Scheduling: { car: CarDTO };
   SchedulingDetails: { car: CarDTO; dates: string[] };

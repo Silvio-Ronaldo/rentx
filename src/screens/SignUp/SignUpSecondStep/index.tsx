@@ -9,6 +9,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useTheme } from 'styled-components';
 
 import { RootNativeParamList } from '../../../@types/@react-navigation';
+import { api } from '../../../services/api';
 
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
@@ -44,7 +45,7 @@ export function SignUpSecondStep({
     navigation.goBack();
   }
 
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !passwordConfirm) {
       Alert.alert('Erro no cadastro', 'Informe a senha e sua confirmação');
     }
@@ -53,11 +54,23 @@ export function SignUpSecondStep({
       Alert.alert('Erro no cadastro', 'As senhas devem ser iguais');
     }
 
-    navigation.navigate('Confirmation', {
-      title: 'Conta criada!',
-      message: 'Agora é só fazer login\ne aproveitar',
-      nextScreenRoute: 'SignIn',
-    });
+    await api
+      .post('/users', {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      })
+      .then(() => {
+        navigation.navigate('Confirmation', {
+          title: 'Conta criada!',
+          message: 'Agora é só fazer login\ne aproveitar',
+          nextScreenRoute: 'SignIn',
+        });
+      })
+      .catch(() => {
+        Alert.alert('Ops!', 'Não foi possível cadastrar.');
+      });
   }
 
   return (

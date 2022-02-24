@@ -16,6 +16,8 @@ import { Button } from '../../components/Button';
 
 import { RootNativeParamList } from '../../@types/@react-navigation';
 
+import { useAuth } from '../../hooks/auth';
+
 import { Container, Header, Title, Subtitle, Form, Footer } from './styles';
 
 type SignInScreenProps = NativeStackScreenProps<RootNativeParamList, 'SignIn'>;
@@ -23,6 +25,8 @@ type SignInScreenProps = NativeStackScreenProps<RootNativeParamList, 'SignIn'>;
 export function SignIn({ navigation }: SignInScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { signIn } = useAuth();
 
   const theme = useTheme();
 
@@ -36,6 +40,8 @@ export function SignIn({ navigation }: SignInScreenProps) {
       });
 
       await schema.validate({ email, password });
+
+      await signIn({ email, password });
       Alert.alert('Tudo certo!');
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
