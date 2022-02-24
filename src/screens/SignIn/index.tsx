@@ -8,14 +8,19 @@ import {
 } from 'react-native';
 import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { Button } from '../../components/Button';
 
+import { RootNativeParamList } from '../../@types/@react-navigation';
+
 import { Container, Header, Title, Subtitle, Form, Footer } from './styles';
 
-export function SignIn() {
+type SignInScreenProps = NativeStackScreenProps<RootNativeParamList, 'SignIn'>;
+
+export function SignIn({ navigation }: SignInScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,6 +47,10 @@ export function SignIn() {
         );
       }
     }
+  }
+
+  function handleSignUp() {
+    navigation.navigate('SignUpFirstStep');
   }
 
   return (
@@ -96,7 +105,7 @@ export function SignIn() {
               title="Criar conta gratuita"
               color={theme.colors.background_secondary}
               light
-              onPress={() => {}}
+              onPress={handleSignUp}
               enabled
               loading={false}
             />
