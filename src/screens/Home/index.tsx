@@ -22,7 +22,7 @@ import { CarDTO } from '../../dtos/CarDTO';
 
 import Logo from '../../assets/logo.svg';
 
-import { Container, Header, TotalCars, CarList, MyCarsButton } from './styles';
+import { Container, Header, TotalCars, CarList } from './styles';
 
 type HomeScreenProps = NativeStackScreenProps<RootNativeParamList, 'Home'>;
 
