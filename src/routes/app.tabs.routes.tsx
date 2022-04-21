@@ -30,6 +30,7 @@ export function AppTabsRoutes() {
           height: 78,
           backgroundColor: theme.colors.background_primary,
         },
+        headerShown: false,
       }}
     >
       <Screen

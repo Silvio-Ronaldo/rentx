@@ -42,6 +42,8 @@
       "react/jsx-no-bind": "off",
       "react/jsx-no-constructed-context-values": "off",
       "react/no-unstable-nested-components": "off",
+      "no-underscore-dangle": "off",
+      "no-param-reassign": "off",
       "prettier/prettier": "error",
       "import/extensions": [
         "error",
