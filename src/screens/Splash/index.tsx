@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useNavigation, RouteProp } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Animated, {
   useSharedValue,
@@ -85,6 +86,7 @@ export function Splash() {
 
   return (
     <Container>
+      <StatusBar translucent backgroundColor="transparent" />
       <Animated.View style={[brandStyles, { position: 'absolute' }]}>
         <BrandSvg width={90} height={50} />
       </Animated.View>
