@@ -4,16 +4,19 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import { useTheme } from 'styled-components';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import * as Yup from 'yup';
 
 import { BackButton } from '../../components/BackButton';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
+import { Button } from '../../components/Button';
 
 import { RootNativeParamList } from '../../@types/@react-navigation';
 
@@ -38,7 +41,7 @@ import {
 type ProfileProps = NativeStackScreenProps<RootNativeParamList, 'Profile'>;
 
 export function Profile({ navigation }: ProfileProps) {
-  const { user, signOut } = useAuth();
+  const { user, signOut, updateUser } = useAuth();
 
   const [option, setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
   const [avatar, setAvatar] = useState(user.avatar);
@@ -49,6 +52,25 @@ export function Profile({ navigation }: ProfileProps) {
 
   function handleBack() {
     navigation.goBack();
+  }
+
+  function handleSignOut() {
+    Alert.alert(
+      'Tem certeza que quer sair?',
+      'Lembre-se, depois de sair será preciso estar conectado a internet para fazer login novamente.',
+      [
+        {
+          text: 'Cancelar',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: 'Sair',
+          onPress: () => signOut(),
+          style: 'destructive',
+        },
+      ],
+    );
   }
 
   async function handleSelectAvatar() {
@@ -68,6 +90,36 @@ export function Profile({ navigation }: ProfileProps) {
     setOption(optionSelected);
   }
 
+  async function handleProfileUpdate() {
+    try {
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome é obrigatório'),
+        driverLicense: Yup.string().required('CNH é obrigatória'),
+      });
+
+      const data = { name, driverLicense };
+      await schema.validate(data);
+
+      await updateUser({
+        id: user.id,
+        user_id: user.user_id,
+        email: user.email,
+        name,
+        driver_license: driverLicense,
+        avatar,
+        token: user.token,
+      });
+
+      Alert.alert('Perfil atualizado!');
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        Alert.alert('Opa', error.message);
+      } else {
+        Alert.alert('Opa', 'Não foi possível atualizar o perfil.');
+      }
+    }
+  }
+
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -82,7 +134,7 @@ export function Profile({ navigation }: ProfileProps) {
             <HeaderTop>
               <BackButton onPress={handleBack} color={theme.colors.shape} />
               <HeaderTitle>Editar Perfil</HeaderTitle>
-              <LogoutButton onPress={signOut}>
+              <LogoutButton onPress={handleSignOut}>
                 <Feather name="power" size={24} color={theme.colors.shape} />
               </LogoutButton>
             </HeaderTop>
@@ -145,6 +197,8 @@ export function Profile({ navigation }: ProfileProps) {
                 />
               </InputSection>
             )}
+
+            <Button title="Salvar alterações" onPress={handleProfileUpdate} />
           </Content>
         </Container>
       </TouchableWithoutFeedback>
