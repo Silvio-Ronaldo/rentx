@@ -10,6 +10,7 @@ import { useTheme } from 'styled-components';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Feather } from '@expo/vector-icons';
+import { useNetInfo } from '@react-native-community/netinfo';
 import * as ImagePicker from 'expo-image-picker';
 import * as Yup from 'yup';
 
@@ -49,6 +50,7 @@ export function Profile({ navigation }: ProfileProps) {
   const [driverLicense, setDriverLicense] = useState(user.driver_license);
 
   const theme = useTheme();
+  const netInfo = useNetInfo();
 
   function handleBack() {
     navigation.goBack();
@@ -87,7 +89,14 @@ export function Profile({ navigation }: ProfileProps) {
   }
 
   function handleChangeOption(optionSelected: 'dataEdit' | 'passwordEdit') {
-    setOption(optionSelected);
+    if (netInfo.isConnected === false && optionSelected === 'passwordEdit') {
+      Alert.alert(
+        'Você está Offline',
+        'Conecte-se a Internet para trocar a senha.',
+      );
+    } else {
+      setOption(optionSelected);
+    }
   }
 
   async function handleProfileUpdate() {

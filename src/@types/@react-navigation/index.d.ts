@@ -1,4 +1,4 @@
-import { CarDTO } from '../../dtos/CarDTO';
+import { Car as ModelCar } from '../../database/model/Car';
 import { UserDTO } from '../../dtos/UserDTO';
 
 export type RootNativeParamList = {
@@ -9,9 +9,9 @@ export type RootNativeParamList = {
   Home: undefined;
   HomeTab: undefined;
   Profile: undefined;
-  CarDetails: { car: CarDTO };
-  Scheduling: { car: CarDTO };
-  SchedulingDetails: { car: CarDTO; dates: string[] };
+  CarDetails: { car: ModelCar };
+  Scheduling: { car: ModelCar };
+  SchedulingDetails: { car: ModelCar; dates: string[] };
   Confirmation: { title: string; message: string; nextScreenRoute: string };
   MyCars: undefined;
 };
