@@ -3,9 +3,10 @@ import { StatusBar, FlatList } from 'react-native';
 import { useTheme } from 'styled-components';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AntDesign } from '@expo/vector-icons';
+import { format, parseISO } from 'date-fns';
+import { useIsFocused } from '@react-navigation/native';
 
 import { RootNativeParamList } from '../../@types/@react-navigation';
-import { CarDTO } from '../../dtos/CarDTO';
 
 import { api } from '../../services/api';
 
@@ -28,15 +29,15 @@ import {
   CardFooterPeriod,
   CardFooterDate,
 } from './styles';
+import { Car as ModelCar } from '../../database/model/Car';
 
 type MyCarsProps = NativeStackScreenProps<RootNativeParamList, 'MyCars'>;
 
 interface CarsData {
-  car: CarDTO;
-  user_id: string;
   id: string;
-  startDate: string;
-  endDate: string;
+  car: ModelCar;
+  start_date: string;
+  end_date: string;
 }
 
 export function MyCars({ navigation }: MyCarsProps) {
@@ -44,6 +45,7 @@ export function MyCars({ navigation }: MyCarsProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   const theme = useTheme();
+  const screenFocused = useIsFocused();
 
   function handleBack() {
     navigation.goBack();
@@ -52,8 +54,16 @@ export function MyCars({ navigation }: MyCarsProps) {
   useEffect(() => {
     async function fetchCars() {
       try {
-        const response = await api.get('/schedules_byuser?user_id=1');
-        setCars(response.data);
+        const response = await api.get('/rentals');
+        const dataFormatted = response.data.map((data: CarsData) => {
+          return {
+            id: data.id,
+            car: data.car,
+            start_date: format(parseISO(data.start_date), 'dd/MM/yyyy'),
+            end_date: format(parseISO(data.end_date), 'dd/MM/yyyy'),
+          };
+        });
+        setCars(dataFormatted);
       } catch (error) {
         console.log(error);
       } finally {
@@ -62,7 +72,7 @@ export function MyCars({ navigation }: MyCarsProps) {
     }
 
     fetchCars();
-  }, []);
+  }, [screenFocused]);
 
   return (
     <Container>
@@ -107,14 +117,14 @@ export function MyCars({ navigation }: MyCarsProps) {
                 <CardFooter>
                   <CardFooterTitle>PERÍODO</CardFooterTitle>
                   <CardFooterPeriod>
-                    <CardFooterDate>{item.startDate}</CardFooterDate>
+                    <CardFooterDate>{item.start_date}</CardFooterDate>
                     <AntDesign
                       name="arrowright"
                       size={20}
                       color={theme.colors.title}
                       style={{ marginHorizontal: 10 }}
                     />
-                    <CardFooterDate>{item.endDate}</CardFooterDate>
+                    <CardFooterDate>{item.end_date}</CardFooterDate>
                   </CardFooterPeriod>
                 </CardFooter>
               </CardCarWrapper>
